@@ -1,0 +1,32 @@
+pipeline{
+  agent any 
+  tools{
+     maven "maven3"
+     }
+  stages{
+     stage('gitSCM'){
+      steps{
+        echo 'Start of gitSCM step'
+        git changelog: false, credentialsId: 'Github_Credentials', poll: false, url: 'https://github.com/MartinVardhan/spring3-mvc-maven-xml-hello-world.git'
+      }
+      }
+	  stage ('Initialize') {
+        steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+      }
+      stage('build'){
+      steps{
+        sh 'mvn -f pom.xml clean package'
+      }
+    }
+    stage('deploy'){
+      steps{
+        deploy adapters: [tomcat8(credentialsId: 'Tomcat-Credentials', path: '', url: 'http://http://ec2-15-207-106-61.ap-south-1.compute.amazonaws.com:8181/')], contextPath: 'PetClinic_Exampl', onFailure: false, war: '**/target/*.war'
+      }
+    }
+  }
+}

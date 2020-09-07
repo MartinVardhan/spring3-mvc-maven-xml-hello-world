@@ -25,7 +25,7 @@ pipeline{
     }
     stage('deploy'){
       steps{
-        deploy adapters: [tomcat8(credentialsId: 'Tomcat-Credentials', path: '', url: 'http://ec2-15-207-87-164.ap-south-1.compute.amazonaws.com:8181')], contextPath: 'spring3_HelloWorld_Pipescr', onFailure: false, war: '**/target/*.war'
+        deploy adapters: [tomcat8(credentialsId: 'Tomcat-Credentials', path: '', url: 'http://http://ec2-13-233-11-234.ap-south-1.compute.amazonaws.com:8181/')], contextPath: 'spring3_HelloWorld_Pipescr', onFailure: false, war: '**/target/*.war'
       }
     }
   }

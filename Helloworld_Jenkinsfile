@@ -9,15 +9,7 @@ pipeline{
         echo 'Start of gitSCM step'
         git changelog: false, credentialsId: 'Github_Credentials', poll: false, url: 'https://github.com/MartinVardhan/spring3-mvc-maven-xml-hello-world.git'
       }
-      }
-	stage ('Initialize') {
-        steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-      }
+      }	
       stage('build'){
       steps{
         sh 'mvn -f pom.xml clean package'
